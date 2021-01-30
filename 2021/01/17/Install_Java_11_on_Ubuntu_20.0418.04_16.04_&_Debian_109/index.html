@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/hexo-blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/hexo-blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/hexo-blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/hexo-blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/hexo-blog/css/main.css">
+
+
+<link rel="stylesheet" href="/hexo-blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jasonwang1125.github.io","root":"/hexo-blog/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="from https:&#x2F;&#x2F;computingforgeeks.com&#x2F; In this tutorial, I’ll walk you through the steps to install Oracle Java 11 on Ubuntu 20.04&#x2F;18.04 &#x2F;16.04 &amp; Debian 10&#x2F;9. Java 11 is a long-term support (LTS) rel">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Install Java 11 on Ubuntu 20.04&#x2F;18.04 &#x2F;16.04 &amp; Debian 10&#x2F;9">
+<meta property="og:url" content="http://jasonwang1125.github.io/hexo-blog/2021/01/17/Install_Java_11_on_Ubuntu_20.0418.04_16.04_&_Debian_109/index.html">
+<meta property="og:site_name" content="Jason&#39;s Blog">
+<meta property="og:description" content="from https:&#x2F;&#x2F;computingforgeeks.com&#x2F; In this tutorial, I’ll walk you through the steps to install Oracle Java 11 on Ubuntu 20.04&#x2F;18.04 &#x2F;16.04 &amp; Debian 10&#x2F;9. Java 11 is a long-term support (LTS) rel">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-01-17T11:55:57.000Z">
+<meta property="article:modified_time" content="2021-01-18T07:18:39.184Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://jasonwang1125.github.io/hexo-blog/2021/01/17/Install_Java_11_on_Ubuntu_20.0418.04_16.04_&_Debian_109/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Install Java 11 on Ubuntu 20.04/18.04 /16.04 & Debian 10/9 | Jason's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/hexo-blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jason's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/hexo-blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/hexo-blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/hexo-blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://jasonwang1125.github.io/hexo-blog/2021/01/17/Install_Java_11_on_Ubuntu_20.0418.04_16.04_&_Debian_109/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo-blog/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jason's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Install Java 11 on Ubuntu 20.04/18.04 /16.04 & Debian 10/9
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-17 19:55:57" itemprop="dateCreated datePublished" datetime="2021-01-17T19:55:57+08:00">2021-01-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-18 15:18:39" itemprop="dateModified" datetime="2021-01-18T15:18:39+08:00">2021-01-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/hexo-blog/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/hexo-blog/categories/OS/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>from <a target="_blank" rel="noopener" href="https://computingforgeeks.com/">https://computingforgeeks.com/</a></p>
+<p>In this tutorial, I’ll walk you through the steps to install Oracle Java 11 on Ubuntu 20.04/18.04 /16.04 &amp; Debian 10/9. Java 11 is a long-term support (LTS) release made available to the General public on 25 September 2018 and is production-ready.</p>
+<a id="more"></a>
+
+<p>You can install Java 11 on Ubuntu 20.04/18.04 /16.04 &amp; Debian 10/9 either from one of the following methods:</p>
+<ol>
+<li>Java SE Development Kit 11 (JDK 11)</li>
+<li>OpenJDK 11</li>
+</ol>
+<p>This guide will cover the installation of Oracle Java 11 on Ubuntu 20.04/18.04/16.04 / Debian 9 from both methods.</p>
+<h2 id="Install-Oracle-Java-11-from-PPA-–-Recommended"><a href="#Install-Oracle-Java-11-from-PPA-–-Recommended" class="headerlink" title="Install Oracle Java 11 from PPA – Recommended"></a>Install Oracle Java 11 from PPA – Recommended</h2><p>For <strong>Ubuntu 20.04</strong>, run:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install openjdk-11-jdk</span><br></pre></td></tr></table></figure>
+<p><strong>Ubuntu 18.04/16.04:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:linuxuprising&#x2F;java</span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install oracle-java11-set-default</span><br></pre></td></tr></table></figure>
+<p><strong>For Debian 9 / Debian 8:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;deb http:&#x2F;&#x2F;ppa.launchpad.net&#x2F;linuxuprising&#x2F;java&#x2F;ubuntu bionic main&quot; | sudo tee &#x2F;etc&#x2F;apt&#x2F;sources.list.d&#x2F;linuxuprising-java.list</span><br><span class="line">sudo apt-key adv --keyserver hkp:&#x2F;&#x2F;keyserver.ubuntu.com:80 --recv-keys 73C3DB2A</span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install oracle-java11-set-default</span><br></pre></td></tr></table></figure>
+<p>If you don’t want to set Java 11 as default, then install:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install oracle-java11-installer</span><br></pre></td></tr></table></figure>
+<p>Conform Java verison:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ java -version</span><br><span class="line">openjdk version &quot;11.0.7&quot; 2020-04-14</span><br><span class="line">OpenJDK Runtime Environment (build 11.0.7+10-post-Ubuntu-3ubuntu1)</span><br><span class="line">OpenJDK 64-Bit Server VM (build 11.0.7+10-post-Ubuntu-3ubuntu1, mixed mode, sharing)</span><br></pre></td></tr></table></figure>
+<h3 id="Setting-Default-version-of-Java"><a href="#Setting-Default-version-of-Java" class="headerlink" title="Setting Default version of Java"></a>Setting Default version of Java</h3><p>If you have more than one version of Java installed in your system, you can refer to our guide on how to set default version for all applications.</p>
+<p><a target="_blank" rel="noopener" href="https://computingforgeeks.com/how-to-set-default-java-version-on-ubuntu-debian/">How to set default Java version on Ubuntu / Debian</a></p>
+<h3 id="Manual-–-Install-OpenJDK-11-on-Ubuntu-18-04-16-04-Debian-9"><a href="#Manual-–-Install-OpenJDK-11-on-Ubuntu-18-04-16-04-Debian-9" class="headerlink" title="Manual – Install OpenJDK 11 on Ubuntu 18.04 /16.04 / Debian 9"></a>Manual – Install OpenJDK 11 on Ubuntu 18.04 /16.04 / Debian 9</h3><p>OpenJDK is a free and open-source implementation of the Java Platform, Standard Edition licensed under the GNU General Public License version 2.</p>
+<p>Check the <a target="_blank" rel="noopener" href="https://jdk.java.net/11/">latest release of OpenJDK 11</a> before running the command below:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -O https:&#x2F;&#x2F;download.java.net&#x2F;java&#x2F;GA&#x2F;jdk11&#x2F;9&#x2F;GPL&#x2F;openjdk-11.0.2_linux-x64_bin.tar.gz</span><br></pre></td></tr></table></figure>
+<p>This will download OpenJDK 11 tar file to your working directory. After the download, extract the archive</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar zxvf openjdk-11.0.2_linux-x64_bin.tar.gz</span><br></pre></td></tr></table></figure>
+<p>Move the resulting folder to <code>/usr/local/</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mv jdk-11* &#x2F;usr&#x2F;local&#x2F;</span><br></pre></td></tr></table></figure>
+<p>Set environment variables</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim &#x2F;etc&#x2F;profile.d&#x2F;jdk.sh</span><br></pre></td></tr></table></figure>
+<p>Add:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME&#x3D;&#x2F;usr&#x2F;local&#x2F;jdk-11.0.2</span><br><span class="line">export PATH&#x3D;$PATH:$JAVA_HOME&#x2F;bin</span><br></pre></td></tr></table></figure>
+<p>Source your profile file and check <code>java</code> command</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ source &#x2F;etc&#x2F;profile </span><br><span class="line">$ java -version</span><br><span class="line">openjdk version &quot;11.0.2&quot; 2018-10-16</span><br><span class="line">OpenJDK Runtime Environment 18.9 (build 11.0.2+9)</span><br><span class="line">OpenJDK 64-Bit Server VM 18.9 (build 11.0.2+9, mixed mode)</span><br><span class="line">$ which java</span><br><span class="line">&#x2F;usr&#x2F;local&#x2F;jdk-11.0.2&#x2F;bin&#x2F;java</span><br></pre></td></tr></table></figure>
+<h3 id="Manual-–-Install-Java-SE-Development-Kit-11-JDK-11-on-Ubuntu-18-04-16-04-Debian-9"><a href="#Manual-–-Install-Java-SE-Development-Kit-11-JDK-11-on-Ubuntu-18-04-16-04-Debian-9" class="headerlink" title="Manual – Install Java SE Development Kit 11 (JDK 11) on Ubuntu 18.04 /16.04 / Debian 9"></a>Manual – Install Java SE Development Kit 11 (JDK 11) on Ubuntu 18.04 /16.04 / Debian 9</h3><p>Download the <a target="_blank" rel="noopener" href="https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html">latest release</a> of JDK 11.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -LO -H &quot;Cookie: oraclelicense&#x3D;accept-securebackup-cookie&quot; \</span><br><span class="line">&quot;http:&#x2F;&#x2F;download.oracle.com&#x2F;otn-pub&#x2F;java&#x2F;jdk&#x2F;11.0.2+9&#x2F;f51449fcd52f4d52b93a989c5c56ed3c&#x2F;jdk-11.0.2_linux-x64_bin.deb&quot;</span><br></pre></td></tr></table></figure>
+<p>Then install the package with the <code>dpkg</code>command</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg -i jdk-11.0.2_linux-x64_bin.deb</span><br></pre></td></tr></table></figure>
+<p>If you encounter dependency issues, then run:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt -f install</span><br><span class="line">$ sudo dpkg -i jdk-11.0.2_linux-x64_bin.deb</span><br></pre></td></tr></table></figure>
+<p>Set environment variables</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim &#x2F;etc&#x2F;profile.d&#x2F;jdk.sh</span><br></pre></td></tr></table></figure>
+<p>Add:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME&#x3D;&#x2F;usr&#x2F;lib&#x2F;jvm&#x2F;jdk-11.0.2&#x2F;</span><br><span class="line">export PATH&#x3D;$PATH:$JAVA_HOME&#x2F;bin</span><br></pre></td></tr></table></figure>
+<p>Source the file and confirm Java version installed</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ source &#x2F;etc&#x2F;profile.d&#x2F;jdk.sh</span><br><span class="line">$ java -version</span><br><span class="line">java version &quot;11.0.2&quot; 2018-10-16 LTS</span><br><span class="line">Java(TM) SE Runtime Environment 18.9 (build 11.0.2+9-LTS)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM 18.9 (build 11.0.2+9-LTS, mixed mode</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/hexo-blog/2021/01/17/centos-%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" rel="prev" title="Centos 网络安全">
+      <i class="fa fa-chevron-left"></i> Centos 网络安全
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/hexo-blog/2021/01/17/Install_Java_11_on_CentOS_7__Fedora_29__Fedora_28/" rel="next" title="Install Java 11 on CentOS 7 / Fedora 29 / Fedora 28">
+      Install Java 11 on CentOS 7 / Fedora 29 / Fedora 28 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-Oracle-Java-11-from-PPA-%E2%80%93-Recommended"><span class="nav-number">1.</span> <span class="nav-text">Install Oracle Java 11 from PPA – Recommended</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Setting-Default-version-of-Java"><span class="nav-number">1.1.</span> <span class="nav-text">Setting Default version of Java</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Manual-%E2%80%93-Install-OpenJDK-11-on-Ubuntu-18-04-16-04-Debian-9"><span class="nav-number">1.2.</span> <span class="nav-text">Manual – Install OpenJDK 11 on Ubuntu 18.04 &#x2F;16.04 &#x2F; Debian 9</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Manual-%E2%80%93-Install-Java-SE-Development-Kit-11-JDK-11-on-Ubuntu-18-04-16-04-Debian-9"><span class="nav-number">1.3.</span> <span class="nav-text">Manual – Install Java SE Development Kit 11 (JDK 11) on Ubuntu 18.04 &#x2F;16.04 &#x2F; Debian 9</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/hexo-blog/archives/">
+        
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/hexo-blog/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/hexo-blog/lib/anime.min.js"></script>
+  <script src="/hexo-blog/lib/velocity/velocity.min.js"></script>
+  <script src="/hexo-blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/hexo-blog/js/utils.js"></script>
+
+<script src="/hexo-blog/js/motion.js"></script>
+
+
+<script src="/hexo-blog/js/schemes/muse.js"></script>
+
+
+<script src="/hexo-blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/hexo-blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/hexo-blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/hexo-blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/hexo-blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/hexo-blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/hexo-blog/css/main.css">
+
+
+<link rel="stylesheet" href="/hexo-blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jasonwang1125.github.io","root":"/hexo-blog/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="from https:&#x2F;&#x2F;computingforgeeks.com&#x2F; This article will help you to install Oracle Java 11 on CentOS 7 and Fedora 29. Java 11 is a long-term support (LTS) release. Java 11 was made available to the Gene">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Install Java 11 on CentOS 7 &#x2F; Fedora 29 &#x2F; Fedora 28">
+<meta property="og:url" content="http://jasonwang1125.github.io/hexo-blog/2021/01/17/Install_Java_11_on_CentOS_7__Fedora_29__Fedora_28/index.html">
+<meta property="og:site_name" content="Jason&#39;s Blog">
+<meta property="og:description" content="from https:&#x2F;&#x2F;computingforgeeks.com&#x2F; This article will help you to install Oracle Java 11 on CentOS 7 and Fedora 29. Java 11 is a long-term support (LTS) release. Java 11 was made available to the Gene">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-01-17T11:55:57.000Z">
+<meta property="article:modified_time" content="2021-01-18T07:18:34.536Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://jasonwang1125.github.io/hexo-blog/2021/01/17/Install_Java_11_on_CentOS_7__Fedora_29__Fedora_28/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Install Java 11 on CentOS 7 / Fedora 29 / Fedora 28 | Jason's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/hexo-blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jason's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/hexo-blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/hexo-blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/hexo-blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://jasonwang1125.github.io/hexo-blog/2021/01/17/Install_Java_11_on_CentOS_7__Fedora_29__Fedora_28/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo-blog/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jason's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Install Java 11 on CentOS 7 / Fedora 29 / Fedora 28
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-17 19:55:57" itemprop="dateCreated datePublished" datetime="2021-01-17T19:55:57+08:00">2021-01-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-18 15:18:34" itemprop="dateModified" datetime="2021-01-18T15:18:34+08:00">2021-01-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/hexo-blog/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/hexo-blog/categories/OS/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>from <a target="_blank" rel="noopener" href="https://computingforgeeks.com/">https://computingforgeeks.com/</a></p>
+<p>This article will help you to install Oracle Java 11 on CentOS 7 and Fedora 29. Java 11 is a long-term support (LTS) release. Java 11 was made available to the General public on 25 September 2018 and is production-ready.</p>
+<a id="more"></a>
+
+<p>There are two ways of installing Java 11 on CentOS 7 / Fedora 29 &amp; Fedora 28.</p>
+<ol>
+<li>Install Java SE Development Kit 11 (JDK 11)</li>
+<li>Install OpenJDK 11</li>
+</ol>
+<p>It is recommended to install OpenJDK 11 because of the license issues around Java SE Development Kit. This guide will cover the installation of both.</p>
+<h3 id="Install-OpenJDK-11-on-CentOS-7-Fedora-29-Fedora-28"><a href="#Install-OpenJDK-11-on-CentOS-7-Fedora-29-Fedora-28" class="headerlink" title="Install OpenJDK 11 on CentOS 7 / Fedora 29 / Fedora 28"></a>Install OpenJDK 11 on CentOS 7 / Fedora 29 / Fedora 28</h3><p>OpenJDK is a free and open-source implementation of the Java Platform, Standard Edition licensed under the GNU General Public License version 2.</p>
+<p>Check the <a target="_blank" rel="noopener" href="https://jdk.java.net/11/">latest release of OpenJDK 11</a> before running the commands below:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -O https:&#x2F;&#x2F;download.java.net&#x2F;java&#x2F;GA&#x2F;jdk11&#x2F;9&#x2F;GPL&#x2F;openjdk-11.0.2_linux-x64_bin.tar.gz</span><br></pre></td></tr></table></figure>
+<p>After the download, extract the archive</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar zxvf openjdk-11.0.2_linux-x64_bin.tar.gz</span><br></pre></td></tr></table></figure>
+<p>Move the resulting folder to <code>/usr/local/</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mv jdk-11.0.2&#x2F; &#x2F;usr&#x2F;local&#x2F;</span><br></pre></td></tr></table></figure>
+<p>Set environment variables</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim &#x2F;etc&#x2F;profile.d&#x2F;jdk11.sh</span><br></pre></td></tr></table></figure>
+<p>Add:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME&#x3D;&#x2F;usr&#x2F;local&#x2F;jdk-11.0.2</span><br><span class="line">export PATH&#x3D;$PATH:$JAVA_HOME&#x2F;bin</span><br></pre></td></tr></table></figure>
+<p>Source your profile file and check <code>java</code> command</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ source &#x2F;etc&#x2F;profile.d&#x2F;jdk11.sh</span><br><span class="line">$ java -version</span><br><span class="line">openjdk version &quot;11.0.2&quot; 2019-01-15</span><br><span class="line">OpenJDK Runtime Environment 18.9 (build 11.0.2+9)</span><br><span class="line">OpenJDK 64-Bit Server VM 18.9 (build 11.0.2+9, mixed mode)</span><br><span class="line"></span><br><span class="line">$ which java</span><br><span class="line">&#x2F;usr&#x2F;local&#x2F;jdk-11.0.2&#x2F;bin&#x2F;java</span><br></pre></td></tr></table></figure>
+<h3 id="Install-Java-SE-Development-Kit-11-JDK-11-on-CentOS-7-Fedora-29-Fedora-28"><a href="#Install-Java-SE-Development-Kit-11-JDK-11-on-CentOS-7-Fedora-29-Fedora-28" class="headerlink" title="Install Java SE Development Kit 11 (JDK 11) on CentOS 7 / Fedora 29 / Fedora 28"></a>Install Java SE Development Kit 11 (JDK 11) on CentOS 7 / Fedora 29 / Fedora 28</h3><p>Download the <a target="_blank" rel="noopener" href="https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html">latest release</a> of JDK 11.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget --no-cookies --no-check-certificate --header &quot;Cookie: oraclelicense&#x3D;accept-securebackup-cookie&quot;   &quot;http:&#x2F;&#x2F;download.oracle.com&#x2F;otn-pub&#x2F;java&#x2F;jdk&#x2F;11.0.2+9&#x2F;f51449fcd52f4d52b93a989c5c56ed3c&#x2F;jdk-11.0.2_linux-x64_bin.rpm&quot;</span><br></pre></td></tr></table></figure>
+<p>Then install the package with the <code>rpm</code>command</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo rpm -Uvh jdk-11.0.2_linux-x64_bin.rpm </span><br><span class="line">warning: jdk-11.0.2_linux-x64_bin.rpm: Header V3 RSA&#x2F;SHA256 Signature, key ID ec551f03: NOKEY</span><br><span class="line">Preparing...                          ################################# [100%]</span><br><span class="line">Updating &#x2F; installing...</span><br><span class="line">   1:jdk-11.0.2-2000:11.0.2-ga        ################################# [100%]</span><br></pre></td></tr></table></figure>
+<p>Confirm Java version installed</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ java -version </span><br><span class="line">java version &quot;11.0.2&quot; 2019-01-15 LTS</span><br><span class="line">Java(TM) SE Runtime Environment 18.9 (build 11.0.2+9-LTS)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM 18.9 (build 11.0.2+9-LTS, mixed mode)</span><br></pre></td></tr></table></figure>
+<p>Create an environment file</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim &#x2F;etc&#x2F;profile.d&#x2F;jdk.sh</span><br></pre></td></tr></table></figure>
+<p>Add:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME&#x3D;&#x2F;usr&#x2F;java&#x2F;default</span><br><span class="line">export PATH&#x3D;$PATH:$JAVA_HOME&#x2F;bin</span><br></pre></td></tr></table></figure>
+<p>Source profile file to update changes</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source &#x2F;etc&#x2F;profile</span><br></pre></td></tr></table></figure>
+<h3 id="Choosing-Default-Version-of-Java"><a href="#Choosing-Default-Version-of-Java" class="headerlink" title="Choosing Default Version of Java"></a>Choosing Default Version of Java</h3><p>If you have other versions of JDK installed, you set your default Java as follows.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># alternatives --config java</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/hexo-blog/2021/01/17/Install_Java_11_on_Ubuntu_20.0418.04_16.04_&_Debian_109/" rel="prev" title="Install Java 11 on Ubuntu 20.04/18.04 /16.04 & Debian 10/9">
+      <i class="fa fa-chevron-left"></i> Install Java 11 on Ubuntu 20.04/18.04 /16.04 & Debian 10/9
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/hexo-blog/2021/01/17/How_to_install_pgAdmin_4_on_CentOS_7/" rel="next" title="How to install pgAdmin 4 on CentOS 7">
+      How to install pgAdmin 4 on CentOS 7 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Install-OpenJDK-11-on-CentOS-7-Fedora-29-Fedora-28"><span class="nav-number">1.</span> <span class="nav-text">Install OpenJDK 11 on CentOS 7 &#x2F; Fedora 29 &#x2F; Fedora 28</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Install-Java-SE-Development-Kit-11-JDK-11-on-CentOS-7-Fedora-29-Fedora-28"><span class="nav-number">2.</span> <span class="nav-text">Install Java SE Development Kit 11 (JDK 11) on CentOS 7 &#x2F; Fedora 29 &#x2F; Fedora 28</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Choosing-Default-Version-of-Java"><span class="nav-number">3.</span> <span class="nav-text">Choosing Default Version of Java</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/hexo-blog/archives/">
+        
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/hexo-blog/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/hexo-blog/lib/anime.min.js"></script>
+  <script src="/hexo-blog/lib/velocity/velocity.min.js"></script>
+  <script src="/hexo-blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/hexo-blog/js/utils.js"></script>
+
+<script src="/hexo-blog/js/motion.js"></script>
+
+
+<script src="/hexo-blog/js/schemes/muse.js"></script>
+
+
+<script src="/hexo-blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/hexo-blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
